@@ -1,11 +1,13 @@
 import React from "react";
 import "./index.css";
 import StyleGuide from "./assets/StyleGuide";
+import NavBar from "./components/navBar";
 
 function App() {
   return (
     <div>
-      <StyleGuide />
+      <NavBar />
+      {/* <StyleGuide /> */}
     </div>
   );
 }

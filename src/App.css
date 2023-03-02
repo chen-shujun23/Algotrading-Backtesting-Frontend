@@ -1,0 +1,33 @@
+@import url('https://fonts.googleapis.com/css2?family=Source+Serif+Pro&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans&family=Source+Serif+Pro&display=swap');
+
+h1 {
+    font-family: 'Source Serif Pro', serif;
+    font-size: 42px;
+    color: #422F01;
+    }
+    
+h2 {
+    font-family: 'Source Serif Pro', serif;
+    font-size: 28px;
+    color: #422F01;
+    }
+    
+h3 {
+    font-family: 'Source Serif Pro', serif;
+    font-size: 20px;
+    color: #422F01;
+    }
+    
+span {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 16px;
+    color: #422F01;
+    }
+    
+body {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 12px;
+    color: #422F01;
+    }
+    

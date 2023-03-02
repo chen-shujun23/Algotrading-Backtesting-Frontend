@@ -4,7 +4,7 @@ module.exports = {
   theme: {
     extend: {
       gridTemplateColumns: {
-        15: "repeat(15, minmax(0, 1fr))",
+        16: "repeat(16, minmax(0, 1fr))",
       },
       colors: {
         transparent: "transparent",
@@ -21,16 +21,13 @@ module.exports = {
         orange: "#F4A261",
         purple: "#CB6CE6",
       },
-
-      // fontFamily: {
-      //   DM: ["DM Sans", "sans-serif"],
-      // },
-      // fontSize: {
-      //   "3xl": "26px",
-      //   xl: "20px",
-      //   lg: "18px",
-      //   base: "16px",
-      // },
+      fontFamily: {
+        openSans: ["Open Sans", "sans-serif"],
+      },
+      fontSize: {
+        16: "16px",
+        12: "12px",
+      },
     },
   },
   plugins: [],

@@ -23,10 +23,7 @@ module.exports = {
       },
       fontFamily: {
         openSans: ["Open Sans", "sans-serif"],
-      },
-      fontSize: {
-        16: "16px",
-        12: "12px",
+        sourceSerif: ["Source Serif Pro", "serif"],
       },
     },
   },

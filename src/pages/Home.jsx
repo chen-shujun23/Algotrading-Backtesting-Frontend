@@ -27,6 +27,7 @@ const Home = () => {
         </div>
       </div>
       <div className="w-screen h-screen bg-yellow-light flex flex-row p-20"></div>
+      <div className="w-screen h-screen bg-yellow-dark flex flex-row p-20"></div>
     </div>
   );
 };

@@ -11,7 +11,7 @@ const Footer = () => {
         <img src={banner} alt="Cityscape" className="object-cover" />
       </div>
       <div className="h-3/5 bg-yellow-dark flex flex-col px-20 py-10">
-        <h1>Contact Us</h1>
+        <h2>Contact Us</h2>
         <span> &nbsp;</span>
         <div className="flex flex-row">
           <div>

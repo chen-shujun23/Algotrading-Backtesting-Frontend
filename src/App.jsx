@@ -3,16 +3,16 @@ import { Route, Routes, Navigate } from "react-router-dom";
 import "./App.css";
 import "./index.css";
 
-const NavBar = React.lazy(() => import("./components/NavBar"));
-const AdminLogin = React.lazy(() => import("./pages/AdminLogin"));
-const Create = React.lazy(() => import("./pages/Create"));
-const Discover = React.lazy(() => import("./pages/Discover"));
-const Home = React.lazy(() => import("./pages/Home"));
-const Login = React.lazy(() => import("./pages/Login"));
-const MyStrategies = React.lazy(() => import("./pages/MyStrategies"));
-const Register = React.lazy(() => import("./pages/Register"));
-const SearchResults = React.lazy(() => import("./pages/SearchResults"));
-const Footer = React.lazy(() => import("./components/Footer"));
+import NavBar from "./components/NavBar";
+import AdminLogin from "./pages/AdminLogin";
+import Create from "./pages/Create";
+import Discover from "./pages/Discover";
+import Home from "./pages/Home";
+import Login from "./pages/Login";
+import MyStrategies from "./pages/MyStrategies";
+import Register from "./pages/Register";
+import SearchResults from "./pages/SearchResults";
+import Footer from "./components/Footer";
 
 function App() {
   return (

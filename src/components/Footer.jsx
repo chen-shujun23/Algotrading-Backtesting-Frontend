@@ -12,8 +12,7 @@ const Footer = () => {
       </div>
       <div className="h-3/5 bg-yellow-dark flex flex-col px-20 py-10">
         <h2>Contact Us</h2>
-        <span> &nbsp;</span>
-        <div className="flex flex-row">
+        <div className="flex flex-row pt-3">
           <div>
             <h3>Mailing Address</h3>
             <p>123 Anywhere St, 12-34, Singapore 123456</p>
@@ -27,8 +26,9 @@ const Footer = () => {
             <p>+65 6123 4567</p>
           </div>
         </div>
-        <span> &nbsp;</span>
-        <p className="text-center">Algobeez © Copyright {dayjs().year()}</p>
+        <p className="text-center pt-6">
+          Algobeez © Copyright {dayjs().year()}
+        </p>
       </div>
     </div>
   );

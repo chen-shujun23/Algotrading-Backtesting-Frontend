@@ -5,8 +5,7 @@ const PageHeader = (props) => {
     <div className="w-screen h-80 bg-yellow-dark flex flex-row px-20 py-10">
       <div className="grid w-1/2 pr-10 content-center">
         <h1>{props.header}</h1>
-        <h3> &nbsp;</h3>
-        <span>{props.copy}</span>
+        <span className="pt-5">{props.copy}</span>
       </div>
       <div className="flex w-1/2 pl-10 justify-center">
         <img

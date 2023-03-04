@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Button from "./Button";
+import ButtonSubmit from "./ButtonSubmit";
 
 const SearchBar = () => {
   const [query, setQuery] = useState("");
@@ -24,7 +24,7 @@ const SearchBar = () => {
         onChange={handleInputChange}
       />
 
-      <Button type="submit" bgColour="bg-blue" innerText="Submit" />
+      <ButtonSubmit bgColour="bg-blue" innerText="Submit" />
     </form>
   );
 };

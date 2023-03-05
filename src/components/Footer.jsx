@@ -10,7 +10,7 @@ const Footer = () => {
       <div className="h-2/5">
         <img src={banner} alt="Cityscape" className="object-cover" />
       </div>
-      <div className="h-3/5 bg-yellow-dark flex flex-col px-20 py-10">
+      <div className="h-3/5 bg-yellow-light flex flex-col px-20 py-10">
         <h2>Contact Us</h2>
         <div className="flex flex-row pt-3">
           <div>

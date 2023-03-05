@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import ButtonSubmit from "./ButtonSubmit";
 
 const FormLogin = (props) => {
+  const [loginType, setLoginType] = useState(props.header);
   const [login, setLogin] = useState({
     email: "",
     password: "",
@@ -16,8 +17,8 @@ const FormLogin = (props) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // putData();
-    // setIsOpen(true);
+    window.location.href =
+      loginType === "User Login" ? "/my-strategies" : "/admin-dashboard";
   };
 
   return (
@@ -55,9 +56,11 @@ const FormLogin = (props) => {
       <a href="" className="text-sm text-stone-500 hover:underline">
         Forgot Your Password?
       </a>
-      <a href="/register" className="text-sm text-stone-500 hover:underline">
-        New here?
-      </a>
+      {loginType === "User Login" ? (
+        <a href="/register" className="text-sm text-stone-500 hover:underline">
+          New here?
+        </a>
+      ) : null}
     </form>
   );
 };

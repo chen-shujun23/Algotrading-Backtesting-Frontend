@@ -3,9 +3,6 @@ module.exports = {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
     extend: {
-      gridTemplateColumns: {
-        16: "repeat(16, minmax(0, 1fr))",
-      },
       colors: {
         transparent: "transparent",
         current: "currentColor",
@@ -24,6 +21,9 @@ module.exports = {
       fontFamily: {
         openSans: ["Open Sans", "sans-serif"],
         sourceSerif: ["Source Serif Pro", "serif"],
+      },
+      aspectRatio: {
+        "5/6": "5/6",
       },
     },
   },

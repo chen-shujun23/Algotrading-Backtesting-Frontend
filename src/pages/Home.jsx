@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import Button from "../components/Button";
 import Accordion from "../components/Accordian";
 import StrategyCard from "../components/StrategyCard";
-import AlpacaTrade from "../hooks/AlpacaTrade";
 import illustration from "../assets/illustrationHome.png";
 import iconKeyboard from "../assets/iconKeyboard.svg";
 import iconForm from "../assets/iconForm.svg";
@@ -64,9 +63,10 @@ const Home = () => {
             className="pt-24"
           />
         </div>
-        <div className="w-1/2 flex flex-col justify-center pl-10">
-          <StrategyCard />
-          {/* <AlpacaTrade /> */}
+        <div className="w-1/2 grid justify-items-center p-20">
+          <div className="w-3/4">
+            <StrategyCard />
+          </div>
         </div>
       </div>
       <div className="w-screen h-screen bg-yellow-light flex flex-row p-20">

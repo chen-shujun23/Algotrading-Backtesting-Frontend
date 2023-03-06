@@ -18,12 +18,11 @@ const useAlpaca = () => {
   const fetchBars = async (symbol, start_date, end_date) => {
     try {
       setLoading(true);
-      const limit = dayjs(end_date).diff(dayjs(start_date), "day");
       const stream = alpaca.getBarsV2(symbol, {
         start: start_date,
         end: end_date,
         timeframe: "1D",
-        limit,
+        limit: dayjs(end_date).diff(dayjs(start_date), "day"),
       });
       let bars = [];
       for await (let bar of stream) {

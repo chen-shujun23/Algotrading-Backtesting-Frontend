@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import ButtonSubmit from "./ButtonSubmit";
 
-const FormMomentum = (props) => {
+const FormMomentum = () => {
   const [momentum, setMomentum] = useState({
     title: "",
     symbol: "",

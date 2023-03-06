@@ -32,7 +32,7 @@ const FormMomentum = (props) => {
     } else {
       console.log(`Register ${JSON.stringify(momentum)}`);
       window.alert("You have successfully created a strategy.");
-      window.location.href = "/my-strategies";
+      // window.location.href = "/my-strategies";
     }
   };
 

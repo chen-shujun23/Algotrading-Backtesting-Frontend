@@ -1,5 +1,6 @@
 import React from "react";
 import PageHeader from "../components/PageHeader";
+import StrategyList from "../components/StrategyList";
 import illustration from "../assets/illustrationStrategies.png";
 
 const MyStrategies = () => {
@@ -11,6 +12,16 @@ const MyStrategies = () => {
         and backtest to customise and add to your creations list."
         imgSrc={illustration}
         imgAlt="Graphic illustration of a man with a laptop."
+      />
+      <StrategyList
+        listTitle
+        header="My Creations"
+        body="Your original concepts."
+      />
+      <StrategyList
+        listTitle
+        header="My Favourites"
+        body="Favourite strategies discovered by you. Update to make it your own and add to your creations list."
       />
     </div>
   );

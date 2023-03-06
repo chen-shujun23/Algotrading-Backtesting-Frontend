@@ -1,10 +1,11 @@
 import React from "react";
 import PageHeader from "../components/PageHeader";
+import StrategyList from "../components/StrategyList";
 import illustration from "../assets/illustrationSearch.png";
 
 const SearchResults = () => {
   return (
-    <div>
+    <div className="flex flex-col">
       <PageHeader
         header="Search Results"
         copy="Click on a strategy to learn more, favourite to add to your favourites list, 
@@ -12,6 +13,7 @@ const SearchResults = () => {
         imgSrc={illustration}
         imgAlt="Graphic illustration of a man with a laptop."
       />
+      <StrategyList />
     </div>
   );
 };

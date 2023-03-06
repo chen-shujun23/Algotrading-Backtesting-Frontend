@@ -5,6 +5,8 @@ import "./index.css";
 
 import NavBar from "./components/NavBar";
 import AdminLogin from "./pages/AdminLogin";
+import AdminDashboard from "./pages/AdminDashboard";
+import AdminRegister from "./pages/AdminRegister";
 import Create from "./pages/Create";
 import Discover from "./pages/Discover";
 import Home from "./pages/Home";
@@ -27,6 +29,8 @@ function App() {
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
         <Route path="/admin-login" element={<AdminLogin />} />
+        <Route path="/admin-dashboard" element={<AdminDashboard />} />
+        <Route path="/admin-register" element={<AdminRegister />} />
         <Route path="/search-results" element={<SearchResults />} />
       </Routes>
       <Footer />

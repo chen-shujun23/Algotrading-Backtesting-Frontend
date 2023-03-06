@@ -1,17 +1,17 @@
 import React from "react";
-import illustration from "../assets/illustrationRegister.png";
+import illustration from "../assets/illustrationAdminRegister.png";
 import FormRegister from "../components/FormRegister";
 
-const Register = () => {
+const AdminRegister = () => {
   return (
     <div className="w-screen h-screen bg-yellow-dark flex flex-row p-20">
       <div className="grid w-1/2 content-center p-10">
-        <FormRegister header="User Register" />
+        <FormRegister header="Admin Register" />
       </div>
       <div className="grid w-1/2 place-content-center p-10">
         <img
           src={illustration}
-          alt="Graphic illustration of a man with a laptop."
+          alt="Graphic illustration of a woman with a tablet."
           className="object-cover"
         />
       </div>
@@ -19,4 +19,4 @@ const Register = () => {
   );
 };
 
-export default Register;
+export default AdminRegister;

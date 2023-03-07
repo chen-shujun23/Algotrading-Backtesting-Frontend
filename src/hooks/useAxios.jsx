@@ -18,7 +18,6 @@ const useAxios = () => {
         data: BODY,
       });
       setData(response.data);
-      console.log(data);
       setLoading(false);
     } catch (error) {
       setError(error);

@@ -1,4 +1,4 @@
-import React, { useState, createContext } from "react";
+import React, { useState, createContext, useEffect } from "react";
 import { Route, Routes, Navigate } from "react-router-dom";
 import "./App.css";
 import "./index.css";
@@ -18,9 +18,17 @@ import Footer from "./components/Footer";
 export const GlobalContext = createContext();
 
 function App() {
-  const [ACCESS_TOKEN, SET_ACCESS_TOKEN] = useState("");
+  const [accessToken, setAccessToken] = useState("");
+  console.log(`this is the access token ${accessToken}`);
+
+  const handleLogout = () => {
+    setAccessToken("");
+  };
+
   return (
-    <GlobalContext.Provider>
+    <GlobalContext.Provider
+      value={{ accessToken, setAccessToken, handleLogout }}
+    >
       <div>
         <NavBar />
         <Routes>

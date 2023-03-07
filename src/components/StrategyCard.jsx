@@ -6,16 +6,16 @@ const StrategyCard = () => {
   const [bars, setBars] = useState([]);
   const [data, error, loading, fetchBars] = useAlpaca();
 
-  useEffect(() => {
-    fetchBars("AAPL", "2022-02-01", "2022-02-07");
-  }, []);
+  //   useEffect(() => {
+  //     fetchBars("AAPL", "2022-02-01", "2022-02-07");
+  //   }, []);
 
-  useEffect(() => {
-    if (data) {
-      setBars(data);
-      console.log(bars);
-    }
-  }, [data]);
+  //   useEffect(() => {
+  //     if (data) {
+  //       setBars(data);
+  //       console.log(bars);
+  //     }
+  //   }, [data]);
 
   return (
     <div className="w-full aspect-[3/4] bg-white flex flex-col py-4">

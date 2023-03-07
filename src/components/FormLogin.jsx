@@ -1,15 +1,18 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useContext } from "react";
+import { useNavigate } from "react-router-dom";
 import ButtonSubmit from "./ButtonSubmit";
 import useAxios from "../hooks/useAxios";
 import config from "../../config.js";
+import { GlobalContext } from "../App";
 
 const FormLogin = (props) => {
-  const [loginType, setLoginType] = useState(props.header);
   const [login, setLogin] = useState({
     email: "",
     password: "",
   });
   const [data, error, loading, fetchData] = useAxios();
+  const { setAccessToken } = useContext(GlobalContext);
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     const { id, value } = e.target;
@@ -18,15 +21,24 @@ const FormLogin = (props) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const url = config.BASE_URL + "/users/user-login";
-    const method = "POST";
-    const body = JSON.stringify(login);
-    fetchData(url, method, body);
+    if (login.email && login.password) {
+      const url = config.BASE_URL + "/users/user-login";
+      const method = "POST";
+      const body = JSON.stringify(login);
+      fetchData(url, method, body);
+    }
   };
+
+  useEffect(() => {
+    if (data) {
+      setAccessToken(data.access);
+      navigate("/my-strategies");
+    }
+  }, [data]);
 
   return (
     <form className="flex flex-col pr-10" onSubmit={handleSubmit}>
-      <h1 className="pb-5">{props.header}</h1>
+      <h1 className="pb-5">Login</h1>
       <div className="flex flex-col">
         <span className="p-4">Email Address</span>
         <input
@@ -59,11 +71,9 @@ const FormLogin = (props) => {
       <a href="" className="text-sm text-stone-500 hover:underline">
         Forgot Your Password?
       </a>
-      {loginType === "User Login" ? (
-        <a href="/register" className="text-sm text-stone-500 hover:underline">
-          New here?
-        </a>
-      ) : null}
+      <a href="/register" className="text-sm text-stone-500 hover:underline">
+        New here?
+      </a>
     </form>
   );
 };

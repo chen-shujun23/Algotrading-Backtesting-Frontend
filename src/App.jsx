@@ -17,6 +17,8 @@ import SearchResults from "./pages/SearchResults";
 import Footer from "./components/Footer";
 import useAxios from "./hooks/useAxios";
 
+import MomentumAlgo from "./components/MomentumAlgo";
+
 export const GlobalContext = createContext();
 
 function App() {
@@ -84,7 +86,9 @@ function App() {
           {accessToken && userPayload.is_admin ? (
             <Route path="/admin-register" element={<AdminRegister />} />
           ) : null}
+          <Route path="/test" element={<MomentumAlgo />} />
         </Routes>
+
         <Footer />
       </div>
     </GlobalContext.Provider>

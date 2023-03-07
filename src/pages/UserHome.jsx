@@ -65,8 +65,8 @@ const UserHome = () => {
             className="pt-24"
           />
         </div>
-        <div className="w-1/2 grid justify-items-center p-20">
-          <div className="w-3/4">
+        <div className="w-1/2 grid justify-items-center px-20 py-5 ">
+          <div className="w-5/6">
             <StrategyCard />
           </div>
         </div>

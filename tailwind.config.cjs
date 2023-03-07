@@ -6,7 +6,6 @@ module.exports = {
       colors: {
         transparent: "transparent",
         current: "currentColor",
-        peach: "#FDE5D8",
         yellow: {
           dark: "#FFDF92",
           light: "#FFE9B4",

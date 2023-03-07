@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {
   LineChart,
   Line,
@@ -9,82 +9,132 @@ import {
   Legend,
   ResponsiveContainer,
 } from "recharts";
+import useAlpaca from "../hooks/useAlpaca";
+import dayjs from "dayjs";
 
-const data = [
-  {
-    date: "Page A",
-    sSMA: 4000,
-    lSMA: 2400,
-    vwap: 2400,
-  },
-  {
-    date: "Page B",
-    sSMA: 3000,
-    lSMA: 1398,
-    vwap: 2210,
-  },
-  {
-    date: "Page C",
-    sSMA: 2000,
-    lSMA: 9800,
-    vwap: 2290,
-  },
-  {
-    date: "Page D",
-    sSMA: 2780,
-    lSMA: 3908,
-    vwap: 2000,
-  },
-  {
-    date: "Page E",
-    sSMA: 1890,
-    lSMA: 4800,
-    vwap: 2181,
-  },
-  {
-    date: "Page F",
-    sSMA: 2390,
-    lSMA: 3800,
-    vwap: 2500,
-  },
-  {
-    date: "Page G",
-    sSMA: 3490,
-    lSMA: 4300,
-    vwap: 2100,
-  },
-];
-
-// const CustomTooltip = ({ active, payload, label }) => {
-//   if (active && payload && payload.length === 2) {
-//     const lSMA = payload[0].value;
-//     const sSMA = payload[1].value;
-//     if (lSMA === sSMA) {
-//       return (
-//         <div className="custom-tooltip">
-//           <p className="label">{`${label}`}</p>
-//           <p className="lSMA">{`lSMA: ${lSMA}`}</p>
-//           <p className="sSMA">{`sSMA: ${sSMA}`}</p>
-//         </div>
-//       );
-//     }
-//   }
-
-//   return null;
-// };
-
-const Chart = () => {
-  const [analysisData, setAnalysisData] = useState([]);
-
-  const handleAnalysis = (data) => {
-    setAnalysisData(data);
+const Chart = (props) => {
+  const data = {
+    symbol: "AAPL",
+    title: "AAPL SMA Crossover",
+    capital: 10000,
+    start_date: "2021-04-01",
+    end_date: "2022-04-01",
+    sSMA: 50,
+    lSMA: 100,
+    shares: 5,
   };
+  const [apcaData, error, loading, fetchBars] = useAlpaca();
+  const [analysisData, setAnalysisData] = useState([]);
+  const [profitLoss, setProfitLoss] = useState(null);
+
+  useEffect(() => {
+    fetchBars(data.symbol, data.start_date, data.end_date);
+  }, []);
+
+  useEffect(() => {
+    if (apcaData) {
+      setAnalysisData(calculateSMA(apcaData));
+    }
+  }, [apcaData]);
+
+  useEffect(() => {
+    if (analysisData) {
+      setProfitLoss(calculateProfit(analysisData));
+    }
+  }, [analysisData]);
+
+  useEffect(() => {
+    if (profitLoss) {
+      props.onAnalysis(profitLoss);
+    }
+  }, [profitLoss]);
+
+  const calculateSMA = (bars) => {
+    const smaData = [];
+    const smaShortT = [];
+    const smaLongT = [];
+
+    for (let i = 0; i < bars.length; i++) {
+      const date = dayjs(bars[i].Timestamp).format("YYYY-MM-DD");
+      const vwap = bars[i].VWAP;
+
+      // Calculate short term SMA
+      if (i >= data.sSMA - 1) {
+        const sumShortT = bars
+          .slice(i - (data.sSMA - 1), i + 1)
+          .reduce((total, price) => total + price.VWAP, 0);
+        const avgShortT = sumShortT / data.sSMA;
+        smaShortT.push(avgShortT);
+      }
+
+      // Calculate long term SMA
+      if (i >= data.lSMA - 1) {
+        const sumLongT = bars
+          .slice(i - (data.lSMA - 1), i + 1)
+          .reduce((total, price) => total + price.VWAP, 0);
+        const avgLongT = sumLongT / data.lSMA;
+        smaLongT.push(avgLongT);
+      }
+      smaData.push({
+        date,
+        vwap,
+        sSMA: smaShortT[i - (data.sSMA - 1)] || null,
+        lSMA: smaLongT[i - (data.lSMA - 1)] || null,
+      });
+    }
+    return smaData;
+  };
+
+  console.log(analysisData);
+
+  const calculateProfit = (param) => {
+    const capital = 10000;
+    const shares = 5;
+    let currentShares = 0;
+    let currentPrice = null;
+    let buyDate = null;
+    let buyPrice = null;
+    let profit = 0;
+
+    for (let i = 0; i < param.length; i++) {
+      const point = param[i];
+      if (point.lSMA && point.sSMA && point.sSMA > point.lSMA) {
+        // Buy signal
+        if (currentShares === 0) {
+          currentShares = shares;
+          buyPrice = point.vwap;
+          buyDate = point.date;
+          currentPrice = buyPrice;
+        }
+      } else if (point.lSMA && point.sSMA && point.sSMA < point.lSMA) {
+        // Sell signal
+        if (currentShares > 0) {
+          profit += (point.vwap - currentPrice) * currentShares;
+          currentShares = 0;
+          currentPrice = null;
+        }
+      }
+    }
+
+    if (currentShares > 0) {
+      // Sell remaining shares at the last point in the apcaData
+      const lastPoint = param[param.length - 1];
+      profit += (lastPoint.vwap - currentPrice) * currentShares;
+    }
+
+    const percentProfit = ((profit / capital) * 100).toFixed(2);
+
+    return percentProfit;
+  };
+
+  console.log(profitLoss);
+
   return (
     <ResponsiveContainer width="100%" height="100%">
       <LineChart
         width={730}
         height={250}
-        data={data}
+        data={analysisData}
         margin={{ top: 20, right: 20, left: 5, bottom: 5 }}
       >
         <CartesianGrid strokeDasharray="3 3" />
@@ -94,16 +144,13 @@ const Chart = () => {
             fontSize: "12px",
           }}
         />
-
         <YAxis
           style={{
             fontSize: "12px",
           }}
         />
-
         <Tooltip />
         <Legend />
-
         <Line type="monotone" dataKey="sSMA" stroke="#E76F51" dot={false} />
         <Line type="monotone" dataKey="lSMA" stroke="#5F86D0" dot={false} />
         <Line type="monotone" dataKey="vwap" stroke="#422F01" dot={false} />

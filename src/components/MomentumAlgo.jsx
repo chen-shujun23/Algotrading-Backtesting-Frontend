@@ -3,7 +3,6 @@ import useAlpaca from "../hooks/useAlpaca";
 import dayjs from "dayjs";
 
 const MomentumAlgo = () => {
-  //   const [bars, setBars] = useState([]);
   const [data, error, loading, fetchBars] = useAlpaca();
   const [analysisData, setAnalysisData] = useState([]);
 
@@ -13,8 +12,6 @@ const MomentumAlgo = () => {
 
   useEffect(() => {
     if (data) {
-      setBars(data);
-      console.log(data);
       setAnalysisData(calculateSMA(data));
     }
   }, [data]);
@@ -51,12 +48,7 @@ const MomentumAlgo = () => {
   };
 
   console.log(analysisData);
-
-  return (
-    <div>
-      <p>{JSON.stringify(data)}</p>
-    </div>
-  );
+  return;
 };
 
 export default MomentumAlgo;

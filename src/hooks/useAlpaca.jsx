@@ -4,7 +4,7 @@ import Alpaca from "@alpacahq/alpaca-trade-api";
 import dayjs from "dayjs";
 
 const useAlpaca = () => {
-  const [data, setData] = useState([]);
+  const [apcaData, setData] = useState([]);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
 
@@ -36,7 +36,7 @@ const useAlpaca = () => {
     }
   };
 
-  return [data, error, loading, fetchBars];
+  return [apcaData, error, loading, fetchBars];
 };
 
 export default useAlpaca;

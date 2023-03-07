@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import ButtonSubmit from "./ButtonSubmit";
+import useAxios from "../hooks/useAxios";
+import config from "../../config.js";
 
 const FormLogin = (props) => {
   const [loginType, setLoginType] = useState(props.header);
@@ -7,18 +9,19 @@ const FormLogin = (props) => {
     email: "",
     password: "",
   });
+  const [data, error, loading, fetchData] = useAxios();
 
   const handleChange = (e) => {
-    setLogin({
-      ...login,
-      [e.target.id]: e.target.value,
-    });
+    const { id, value } = e.target;
+    setLogin((prevLogin) => ({ ...prevLogin, [id]: value }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    window.location.href =
-      loginType === "User Login" ? "/my-strategies" : "/admin-dashboard";
+    const url = config.BASE_URL + "/users/user-login";
+    const method = "POST";
+    const body = JSON.stringify(login);
+    fetchData(url, method, body);
   };
 
   return (

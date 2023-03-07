@@ -19,7 +19,7 @@ const StrategyCard = () => {
 
   return (
     <div className="w-full aspect-[3/4] bg-white flex flex-col py-4">
-      <tag className="bg-blue w-1/4 text-center">#AAPL</tag>
+      <div className="bg-blue w-1/4 text-center">#AAPL</div>
       <div className="font-bold p-4">AAPL SMA Crossover</div>
       <div className="h-3/5 w-full bg-slate-200"></div>
       <div className="flex flex-col p-4">

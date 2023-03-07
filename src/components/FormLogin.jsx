@@ -5,7 +5,7 @@ import useAxios from "../hooks/useAxios";
 import config from "../../config.js";
 import { GlobalContext } from "../App";
 
-const FormLogin = (props) => {
+const FormLogin = () => {
   const [login, setLogin] = useState({
     email: "",
     password: "",
@@ -13,6 +13,10 @@ const FormLogin = (props) => {
   const [data, error, loading, fetchData] = useAxios();
   const { setAccessToken } = useContext(GlobalContext);
   const navigate = useNavigate();
+
+  const saveToLocalStorage = (token) => {
+    localStorage.setItem("refreshToken", token);
+  };
 
   const handleChange = (e) => {
     const { id, value } = e.target;
@@ -25,6 +29,7 @@ const FormLogin = (props) => {
       const url = config.BASE_URL + "/users/user-login";
       const method = "POST";
       const body = JSON.stringify(login);
+      console.log(body);
       fetchData(url, method, body);
     }
   };
@@ -32,7 +37,8 @@ const FormLogin = (props) => {
   useEffect(() => {
     if (data) {
       setAccessToken(data.access);
-      navigate("/my-strategies");
+      saveToLocalStorage(data.refresh);
+      navigate("/home");
     }
   }, [data]);
 

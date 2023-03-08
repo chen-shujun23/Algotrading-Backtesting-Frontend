@@ -48,7 +48,7 @@ const UsersTable = (props) => {
               type="button"
               bgColour="bg-red"
               innerText="Add Admin"
-              link="/user-register"
+              link="/admin-register"
             />
           ) : null}
         </div>

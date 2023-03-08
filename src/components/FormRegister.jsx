@@ -1,7 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import ButtonSubmit from "./ButtonSubmit";
+import useAxios from "../hooks/useAxios";
+import config from "../../config.js";
 
 const FormRegister = (props) => {
+  const [data, error, loading, fetchData] = useAxios();
   const [register, setRegister] = useState({
     firstName: "",
     lastName: "",
@@ -9,6 +12,21 @@ const FormRegister = (props) => {
     password: "",
     confirmPassword: "",
   });
+
+  const createUser = () => {
+    const url = config.BASE_URL + "/users/create";
+    const method = "PUT";
+    const isAdmin = props.admin ? true : false;
+    const body = {
+      first_name: register.firstName,
+      last_name: register.lastName,
+      email: register.email,
+      password: register.password,
+      is_admin: isAdmin,
+    };
+    const token = null;
+    fetchData(url, method, body, token);
+  };
 
   const handleChange = (e) => {
     setRegister({
@@ -23,9 +41,9 @@ const FormRegister = (props) => {
       window.alert("Passwords do not match. Please try again.");
       return;
     } else {
-      console.log(`Register ${JSON.stringify(register)}`);
+      createUser();
       window.alert("You have successfully registered.");
-      window.location.href = "/my-strategies";
+      window.location.href = "/home";
     }
   };
 

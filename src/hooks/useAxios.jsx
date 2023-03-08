@@ -6,7 +6,7 @@ const useAxios = () => {
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
 
-  const fetchData = async (URL, METHOD, BODY) => {
+  const fetchData = async (URL, METHOD, BODY, TOKEN = null) => {
     setLoading(true);
     try {
       const response = await axios({
@@ -14,6 +14,9 @@ const useAxios = () => {
         url: URL,
         headers: {
           "Content-Type": "application/json",
+        },
+        if(TOKEN) {
+          headers.Authorization = `Bearer ${TOKEN}`;
         },
         data: BODY,
       });

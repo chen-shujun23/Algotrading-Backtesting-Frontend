@@ -14,14 +14,14 @@ import dayjs from "dayjs";
 
 const Chart = (props) => {
   const data = {
-    symbol: "AAPL",
-    title: "AAPL SMA Crossover",
+    symbol: "VOO",
+    title: "S&P500 SMA Crossover",
     capital: 10000,
-    start_date: "2021-04-01",
+    start_date: "2020-04-01",
     end_date: "2022-04-01",
     sSMA: 50,
     lSMA: 100,
-    shares: 5,
+    qty_shares: 5,
   };
   const [apcaData, error, loading, fetchBars] = useAlpaca();
   const [analysisData, setAnalysisData] = useState([]);
@@ -89,7 +89,7 @@ const Chart = (props) => {
 
   const calculateProfit = (param) => {
     const capital = 10000;
-    const shares = 5;
+    const qty_shares = 5;
     let currentShares = 0;
     let currentPrice = null;
     let buyDate = null;
@@ -101,7 +101,7 @@ const Chart = (props) => {
       if (point.lSMA && point.sSMA && point.sSMA > point.lSMA) {
         // Buy signal
         if (currentShares === 0) {
-          currentShares = shares;
+          currentShares = qty_shares;
           buyPrice = point.vwap;
           buyDate = point.date;
           currentPrice = buyPrice;
@@ -117,7 +117,7 @@ const Chart = (props) => {
     }
 
     if (currentShares > 0) {
-      // Sell remaining shares at the last point in the apcaData
+      // Sell remaining qty_shares at the last point in the apcaData
       const lastPoint = param[param.length - 1];
       profit += (lastPoint.vwap - currentPrice) * currentShares;
     }

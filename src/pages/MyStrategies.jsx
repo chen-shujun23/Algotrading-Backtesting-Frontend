@@ -2,22 +2,8 @@ import React, { useEffect } from "react";
 import PageHeader from "../components/PageHeader";
 import StrategyList from "../components/StrategyList";
 import illustration from "../assets/illustrationStrategies.png";
-import useAxios from "../hooks/useAxios";
-import { GlobalContext } from "../App";
 
 const MyStrategies = () => {
-  const { accessToken, userPayload } = useContext(GlobalContext);
-
-  useEffect(() => {
-    if (accessToken) {
-      const url = config.BASE_URL + `/users/${userPayload.id}/strategies`;
-      const method = "GET";
-      const body = JSON.stringify(login);
-      console.log(body);
-      fetchData(url, method, body);
-    }
-  }, []);
-
   return (
     <div>
       <PageHeader

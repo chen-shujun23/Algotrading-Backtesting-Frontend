@@ -13,16 +13,7 @@ import useAlpaca from "../hooks/useAlpaca";
 import dayjs from "dayjs";
 
 const Chart = (props) => {
-  const data = {
-    symbol: "VOO",
-    title: "S&P500 SMA Crossover",
-    capital: 10000,
-    start_date: "2020-04-01",
-    end_date: "2022-04-01",
-    sSMA: 50,
-    lSMA: 100,
-    qty_shares: 5,
-  };
+  const [data, setData] = useState(props.strategy);
   const [apcaData, error, loading, fetchBars] = useAlpaca();
   const [analysisData, setAnalysisData] = useState([]);
   const [profitLoss, setProfitLoss] = useState(null);
@@ -85,8 +76,6 @@ const Chart = (props) => {
     return smaData;
   };
 
-  console.log(analysisData);
-
   const calculateProfit = (param) => {
     const capital = 10000;
     const qty_shares = 5;
@@ -126,8 +115,6 @@ const Chart = (props) => {
 
     return percentProfit;
   };
-
-  console.log(profitLoss);
 
   return (
     <ResponsiveContainer width="100%" height="100%">

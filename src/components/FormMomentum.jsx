@@ -1,21 +1,22 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import ButtonSubmit from "./ButtonSubmit";
+import useAxios from "../hooks/useAxios";
+import config from "../../config.js";
+import { GlobalContext } from "../App";
 
 const FormMomentum = () => {
   const [momentum, setMomentum] = useState({
-    title: "",
     symbol: "",
+    title: "",
     capital: "",
     start_date: "",
     end_date: "",
-    qty_shares_buy: "",
-    qty_shares_sell: "",
-    short_term_sma_buy: "",
-    long_term_sma_buy: "",
-    short_term_sma_sell: "",
-    long_term_sma_sell: "",
-    is_history: false,
+    sSMA: "",
+    lSMA: "",
+    qty_shares: "",
   });
+  const { accessToken, userPayload } = useContext(GlobalContext);
+  const [data, error, loading, fetchData] = useAxios();
 
   const handleChange = (e) => {
     setMomentum({
@@ -24,15 +25,23 @@ const FormMomentum = () => {
     });
   };
 
+  const createStrategy = () => {
+    const url = config.BASE_URL + `/users/${userPayload.id}/strategies`;
+    const method = "POST";
+    const body = momentum;
+    const token = accessToken;
+    fetchData(url, method, body, token);
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     if (momentum.password !== momentum.confirmPassword) {
       window.alert("Passwords do not match. Please try again.");
       return;
     } else {
-      console.log(`Register ${JSON.stringify(momentum)}`);
+      createStrategy();
       window.alert("You have successfully created a strategy.");
-      // window.location.href = "/my-strategies";
+      window.location.href = "/my-strategies";
     }
   };
 
@@ -106,88 +115,57 @@ const FormMomentum = () => {
           />
         </div>
       </div>
-      <h3 className="py-4">Buy Condition</h3>
+      <h3 className="py-4">Buy / Sell Conditions</h3>
       <div className="bg-yellow-light p-4 rounded-3xl">
         <div className="flex flex-row w-full gap-5">
+          <span className="text-center mt-auto mb-2">If</span>
           <div className="flex flex-col w-2/5">
             <span className="p-4">Simple Moving Average</span>
             <input
               className="h-12 w-full px-4 rounded-full mt-auto"
-              id="short_term_sma_buy"
+              id="sSMA"
               type="number"
               placeholder="50"
-              value={momentum.short_term_sma_buy}
+              value={momentum.sSMA}
               onChange={handleChange}
               required
             />
           </div>
-          <span className="text-center mt-auto mb-4 w-1/5">Crosses Over</span>
+          <p className="text-center mt-auto mb-2 w-1/5">
+            Crosses Over
+            <br />
+            Crosses Below
+          </p>
           <div className="flex flex-col w-2/5">
             <span className="p-4">Simple Moving Average</span>
             <input
               className="h-12 w-full px-4 rounded-full mt-auto"
-              id="long_term_sma_buy"
+              id="lSMA"
               type="number"
               placeholder="200"
-              value={momentum.long_term_sma_buy}
+              value={momentum.lSMA}
               onChange={handleChange}
               required
             />
           </div>
+          <p className="text-center mt-auto mb-2">
+            Buy
+            <br />
+            Sell
+          </p>
         </div>
       </div>
-      <h3 className="py-4">Sell Condition</h3>
-      <div className="bg-yellow-light p-4 rounded-3xl">
-        <div className="flex flex-row w-full gap-5">
-          <div className="flex flex-col w-2/5">
-            <span className="p-4">Simple Moving Average</span>
-            <input
-              className="h-12 w-full px-4 rounded-full mt-auto"
-              id="short_term_sma_sell"
-              type="number"
-              placeholder="50"
-              value={momentum.short_term_sma_sell}
-              onChange={handleChange}
-              required
-            />
-          </div>
-          <span className="text-center mt-auto mb-4 w-1/5">Crosses Below</span>
-          <div className="flex flex-col w-2/5">
-            <span className="p-4">Simple Moving Average</span>
-            <input
-              className="h-12 w-full px-4 rounded-full mt-auto"
-              id="long_term_sma_sell"
-              type="number"
-              placeholder="200"
-              value={momentum.long_term_sma_sell}
-              onChange={handleChange}
-              required
-            />
-          </div>
-        </div>
-      </div>
+
       <h3 className="pt-4">Quantity of Shares to Buy/ Sell</h3>
       <div className="flex flex-row w-full gap-10">
         <div className="flex flex-col w-1/2">
           <span className="p-4">Buy</span>
           <input
             className="h-12 w-full px-4 rounded-full mt-auto"
-            id="qty_shares_buy"
+            id="qty_shares"
             type="number"
             placeholder="5"
-            value={momentum.qty_shares_buy}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <div className="flex flex-col w-1/2">
-          <span className="p-4">Sell</span>
-          <input
-            className="h-12 w-full px-4 rounded-full mt-auto"
-            id="qty_shares_sell"
-            type="number"
-            placeholder="5"
-            value={momentum.qty_shares_sell}
+            value={momentum.qty_shares}
             onChange={handleChange}
             required
           />

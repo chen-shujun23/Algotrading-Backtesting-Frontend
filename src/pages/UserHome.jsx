@@ -66,9 +66,7 @@ const UserHome = () => {
           />
         </div>
         <div className="w-1/2 grid justify-items-center px-20 py-5 ">
-          <div className="w-5/6">
-            <StrategyCard />
-          </div>
+          <div className="w-5/6">{/* <StrategyCard /> */}</div>
         </div>
       </div>
       <div className="w-screen h-screen bg-yellow-light flex flex-row p-20">

@@ -29,7 +29,6 @@ const FormLogin = () => {
       const url = config.BASE_URL + "/users/user-login";
       const method = "POST";
       const body = JSON.stringify(login);
-      console.log(body);
       fetchData(url, method, body);
     }
   };

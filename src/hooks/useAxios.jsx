@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import axios from "axios";
 
 const useAxios = () => {
@@ -14,9 +14,7 @@ const useAxios = () => {
         url: URL,
         headers: {
           "Content-Type": "application/json",
-        },
-        if(TOKEN) {
-          headers.Authorization = `Bearer ${TOKEN}`;
+          Authorization: "Bearer " + TOKEN,
         },
         data: BODY,
       });

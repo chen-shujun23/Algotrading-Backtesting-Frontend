@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import ButtonTransparent from "./ButtonTransparent";
 import Chart from "./Chart";
 
-const StrategyCard = () => {
+const StrategyCard = (props) => {
   const [profitLossNum, setProfitLossNum] = useState(null);
 
   const handleAnalysis = (data) => {
@@ -10,11 +10,13 @@ const StrategyCard = () => {
   };
 
   return (
-    <div className="w-full aspect-[3/4] bg-white flex flex-col py-4">
-      <div className="bg-blue w-1/4 text-center">#AAPL</div>
-      <div className="font-bold p-4">AAPL SMA Crossover</div>
+    <div className="w-1/3 aspect-[3/4] bg-white flex flex-col py-4">
+      <div className="bg-blue w-1/4 text-white text-center">
+        #{props.strategy.symbol}
+      </div>
+      <div className="font-bold p-4">{props.strategy.title}</div>
       <div className="h-3/5 w-full bg-slate-200">
-        <Chart onAnalysis={handleAnalysis} />
+        <Chart onAnalysis={handleAnalysis} strategy={props.strategy} />
       </div>
       <div className="flex flex-col p-4">
         <span>Return</span>

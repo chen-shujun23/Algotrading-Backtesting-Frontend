@@ -1,33 +1,41 @@
 import React, { useContext, useEffect, useState } from "react";
 import Button from "./Button";
-import useAxios from "../hooks/useAxios";
-import config from "../../config.js";
-import { GlobalContext } from "../App";
 
 const UsersTable = (props) => {
-  const { accessToken } = useContext(GlobalContext);
-  const [data, error, loading, fetchData] = useAxios();
-  const [adminUsers, setAdminUsers] = useState([]);
-  const [nonAdminUsers, setNonAdminUsers] = useState([]);
+  const [data, setData] = useState([]);
+  const [selectedUser, setSelectedUser] = useState(null);
 
-  const getAllUsers = () => {
-    const url = config.BASE_URL + "/users/all-users";
-    const method = "GET";
-    const body = null;
-    const token = accessToken;
-    fetchData(url, method, body, token);
-  };
 
-  useEffect(() => {
-    getAllUsers();
-  }, []);
 
-  useEffect(() => {
-    if (data) {
-      setAdminUsers(data.filter((user) => user.is_admin === true));
-      setNonAdminUsers(data.filter((user) => user.is_admin === false));
-    }
-  }, [data]);
+  if (props.admin) {
+    const adminUsers = props.allUsers.filter((user) => user.is_admin == true);
+    setData(adminUsers);
+  } else {
+    const customerUsers = nonAdminUsers.filter(
+      (user) => user.email !== email
+    );
+    setData(adminUsers)
+  }
+};
+
+
+
+  // const deleteUser = (email) => {
+  //   if (window.confirm("Are you sure you want to delete this user?")) {
+  //     const url = config.BASE_URL + "/users/delete";
+  //     const method = "DELETE";
+  //     const body = { email };
+  //     const token = accessToken;
+  //     fetchData(url, method, body, token);
+  //   }
+  // };
+
+  // const handleDelete = (e) => {
+  //   const email = e.target.value;
+  //   setSelectedUser(email);
+  //   deleteUser(email);
+
+ 
 
   const user = props.admin ? adminUsers : nonAdminUsers;
 
@@ -100,9 +108,14 @@ const UsersTable = (props) => {
                     </td>
 
                     <td className="whitespace-nowrap p-4 text-sm">
-                      <a href="#" className="text-blue hover:underline">
+                      <button
+                        type="button"
+                        onClick={handleDelete}
+                        value={person.email}
+                        className="text-blue hover:underline"
+                      >
                         Delete
-                      </a>
+                      </button>
                     </td>
                     <td className="whitespace-nowrap p-4 ttext-sm pr-6">
                       <a href="#" className="text-blue hover:underline">

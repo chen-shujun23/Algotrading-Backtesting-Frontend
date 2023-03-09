@@ -1,43 +1,48 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import Button from "./Button";
+import useAxios from "../hooks/useAxios";
+import config from "../../config.js";
+import { GlobalContext } from "../App";
 
 const UsersTable = (props) => {
-  const [data, setData] = useState([]);
-  const [selectedUser, setSelectedUser] = useState(null);
+  const [users, setUsers] = useState([]);
+  const { accessToken } = useContext(GlobalContext);
+  const [data, error, loading, fetchData] = useAxios();
 
+  const getUsersType = () => {
+    if (props.admin) {
+      const adminUsers = props.allUsers.filter((user) => user.is_admin == true);
+      setUsers(adminUsers);
+    } else {
+      const customerUsers = props.allUsers.filter(
+        (user) => user.is_admin == false
+      );
+      setUsers(customerUsers);
+    }
+  };
 
+  useEffect(() => {
+    if (props.allUsers) {
+      getUsersType();
+    }
+  }, [props.allUsers]);
 
-  if (props.admin) {
-    const adminUsers = props.allUsers.filter((user) => user.is_admin == true);
-    setData(adminUsers);
-  } else {
-    const customerUsers = nonAdminUsers.filter(
-      (user) => user.email !== email
-    );
-    setData(adminUsers)
-  }
-};
+  const deleteUser = (userId) => {
+    const url = config.BASE_URL + "/users/delete";
+    const method = "DELETE";
+    const body = { id: userId };
+    const token = accessToken;
+    fetchData(url, method, body, token);
+  };
 
-
-
-  // const deleteUser = (email) => {
-  //   if (window.confirm("Are you sure you want to delete this user?")) {
-  //     const url = config.BASE_URL + "/users/delete";
-  //     const method = "DELETE";
-  //     const body = { email };
-  //     const token = accessToken;
-  //     fetchData(url, method, body, token);
-  //   }
-  // };
-
-  // const handleDelete = (e) => {
-  //   const email = e.target.value;
-  //   setSelectedUser(email);
-  //   deleteUser(email);
-
- 
-
-  const user = props.admin ? adminUsers : nonAdminUsers;
+  const handleDelete = async (e) => {
+    const id = e.target.value;
+    const choice = window.confirm("Are you sure you want to delete this post?");
+    if (!choice) return;
+    deleteUser(id);
+    props.onDelete(id);
+    window.location.reload();
+  };
 
   return (
     <div className="bg-yellow-light pt-10">
@@ -95,8 +100,8 @@ const UsersTable = (props) => {
                 </tr>
               </thead>
               <tbody className="divide-y divide-brown bg-yellow-light">
-                {user.map((person) => (
-                  <tr key={person.email}>
+                {users.map((person) => (
+                  <tr key={person.id}>
                     <td className="whitespace-nowrap p-4 text-sm text-brown font-semibold pl-6">
                       {person.first_name}
                     </td>
@@ -111,7 +116,7 @@ const UsersTable = (props) => {
                       <button
                         type="button"
                         onClick={handleDelete}
-                        value={person.email}
+                        value={person.id}
                         className="text-blue hover:underline"
                       >
                         Delete

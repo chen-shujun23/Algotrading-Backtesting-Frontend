@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import PageHeader from "../components/PageHeader";
 import UsersTable from "../components/UsersTable";
 import illustration from "../assets/illustrationAdminDashboard.png";
@@ -7,10 +7,9 @@ import config from "../../config.js";
 import { GlobalContext } from "../App";
 
 const AdminHome = () => {
-  const { userPayload } = useContext(GlobalContext);
+  const { userPayload, accessToken } = useContext(GlobalContext);
   const [data, error, loading, fetchData] = useAxios();
-  // const [adminUsers, setAdminUsers] = useState([]);
-  // const [nonAdminUsers, setNonAdminUsers] = useState([]);
+  const [allUsers, setAllUSers] = useState([]);
 
   const getAllUsers = () => {
     const url = config.BASE_URL + "/users/all-users";
@@ -24,32 +23,20 @@ const AdminHome = () => {
     getAllUsers();
   }, []);
 
+  useEffect(() => {
+    if (data) {
+      setAllUSers(data);
+    }
+  }, [data]);
+
   const onDelete = (id) => {
-    setNonAdminUsers((prevUsers) => {
-      const findNonAdminUsers = prevUsers.findIndex(
-        (user) => user.is_admin === false
-      );
+    setAllUSers((currentUsers) => {
+      const foundUserIndex = currentUsers.findIndex((user) => user.id === id);
+      // If we find the user with matching ID, remove it
+      if (foundUserIndex !== undefined) currentUsers.splice(foundUserIndex, 1);
+      return currentUsers;
     });
-    //     // If we find the blog post with matching ID, remove it
   };
-
-  // const onDelete = (id) => {
-  //   setBlogposts((currentBlogPosts) => {
-  //     const foundBlogPostIndex = currentBlogPosts.findIndex(entry => entry._id === id);
-
-  //     // If we find the blog post with matching ID, remove it
-  //     if (foundBlogPostIndex !== -1) currentBlogPosts.splice(foundBlogPostIndex, 1);
-
-  //     return currentBlogPosts;
-  //   })
-  // }
-
-  // useEffect(() => {
-  //   if (data) {
-  //     setAdminUsers(data.filter((user) => user.is_admin === true));
-  //     setNonAdminUsers(data.filter((user) => user.is_admin === false));
-  //   }
-  // }, [data]);
 
   return (
     <div>
@@ -59,8 +46,8 @@ const AdminHome = () => {
         imgAlt="Graphic illustration of a woman with a laptop."
       />
       <div className="p-20 bg-yellow-light">
-        <UsersTable admin={false} allUsers={data} />
-        <UsersTable admin={true} allUsers={data} />
+        <UsersTable admin={false} allUsers={allUsers} onDelete={onDelete} />
+        <UsersTable admin={true} allUsers={allUsers} onDelete={onDelete} />
       </div>
     </div>
   );

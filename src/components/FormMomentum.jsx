@@ -16,6 +16,7 @@ const FormMomentum = () => {
     qty_shares: "",
   });
   const { accessToken, userPayload } = useContext(GlobalContext);
+  const { strategyData } = useContext(StrategyCardContext);
   const [data, error, loading, fetchData] = useAxios();
 
   const handleChange = (e) => {
@@ -159,7 +160,7 @@ const FormMomentum = () => {
       <h3 className="pt-4">Quantity of Shares to Buy/ Sell</h3>
       <div className="flex flex-row w-full gap-10">
         <div className="flex flex-col w-1/2">
-          <span className="p-4">Buy</span>
+          <span className="p-4">Quantity of Shares</span>
           <input
             className="h-12 w-full px-4 rounded-full mt-auto"
             id="qty_shares"

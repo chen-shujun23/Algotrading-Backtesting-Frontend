@@ -3,6 +3,7 @@ import Button from "../components/Button";
 import Accordion from "../components/Accordian";
 import StrategyCard from "../components/StrategyCard";
 import illustration from "../assets/illustrationHome.png";
+import illustration2 from "../assets/illustrationSearch.png";
 import iconKeyboard from "../assets/iconKeyboard.svg";
 import iconForm from "../assets/iconForm.svg";
 import iconGraph from "../assets/iconGraph.svg";
@@ -65,12 +66,15 @@ const UserHome = () => {
             className="pt-24"
           />
         </div>
-        <div className="w-1/2 grid justify-items-center px-20 py-5 ">
-          <div className="w-5/6">{/* <StrategyCard /> */}</div>
+        <div className="w-1/2 grid justify-items-center px-20 py-28 ">
+          <img src={illustration2} />
+          {/* <div className="w-5/6">
+            <StrategyCard />
+          </div> */}
         </div>
       </div>
       <div className="w-screen h-screen bg-yellow-light flex flex-row p-20">
-        <div className="grid w-1/2 place-content-center p-10">
+        <div className="grid w-1/2 place-content-center pt-20 px-10">
           <img
             src={illustration}
             alt="Graphic illustration of a woman with a tablet."

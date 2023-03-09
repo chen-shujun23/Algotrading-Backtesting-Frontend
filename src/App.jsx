@@ -7,6 +7,7 @@ import config from "../config.js";
 
 import NavBar from "./components/NavBar";
 import AdminRegister from "./pages/AdminRegister";
+import AdminUpdate from "./pages/AdminUpdate";
 import Create from "./pages/Create";
 import Discover from "./pages/Discover";
 import Home from "./pages/Home";
@@ -22,6 +23,7 @@ export const GlobalContext = createContext();
 function App() {
   const [accessToken, setAccessToken] = useState("");
   const [data, error, loading, fetchData] = useAxios();
+  const [modalIsActive, setModalIsActive] = useState(false);
 
   const refreshToken = localStorage.getItem("refreshToken");
   const userPayload = jwt.decode(accessToken);
@@ -46,17 +48,30 @@ function App() {
     }
   }, [data]);
 
-  // console.log("REFRESH: " + refreshToken);
-  // console.log("ACCESS: " + accessToken);
-  // console.log(userPayload);
+  const changeModalStatus = () => {
+    setModalIsActive(!modalIsActive);
+  };
+
+  const disableScroll = (id) => {
+    document.getElementById(id).style.overflow = "hidden";
+    document.getElementById(id).style.height = "100vh";
+  };
+
+  const enableScroll = (id) => {
+    document.getElementById(id).style.overflow = "auto";
+  };
 
   return (
     <GlobalContext.Provider
       value={{
         accessToken,
         userPayload,
+        modalIsActive,
         setAccessToken,
         handleLogout,
+        changeModalStatus,
+        disableScroll,
+        enableScroll,
       }}
     >
       <div>
@@ -83,6 +98,10 @@ function App() {
 
           {accessToken && userPayload.is_admin ? (
             <Route path="/admin-register" element={<AdminRegister />} />
+          ) : null}
+
+          {accessToken && userPayload.is_admin ? (
+            <Route path="/admin-update/:id" element={<AdminUpdate />} />
           ) : null}
         </Routes>
 

@@ -3,11 +3,19 @@ import StrategyCard from "./StrategyCard";
 import useAxios from "../hooks/useAxios";
 import config from "../../config.js";
 import { GlobalContext } from "../App";
+import UpdateModal from "./UpdateModal";
 
 const StrategyList = (props) => {
-  const { accessToken, userPayload } = useContext(GlobalContext);
+  const {
+    modalIsActive,
+    changeModalStatus,
+    disableScroll,
+    accessToken,
+    userPayload,
+  } = useContext(GlobalContext);
   const [data, error, loading, fetchData] = useAxios();
   const [strategyData, setStrategyData] = useState([]);
+  const [selectedStrategy, setSelectedStrategy] = useState(null);
 
   const getStrategiesByUser = () => {
     const url = config.BASE_URL + `/users/${userPayload.id}/strategies`;
@@ -24,9 +32,15 @@ const StrategyList = (props) => {
   useEffect(() => {
     if (data) {
       setStrategyData(data);
-      console.log(strategyData);
     }
   }, [data]);
+
+  // set selected strategy when card update is clicked
+  const handleUpdate = (strategy) => {
+    setSelectedStrategy(strategy);
+    changeModalStatus();
+    disableScroll("root");
+  };
 
   return (
     <div className="w-screen h-fit bg-yellow-light flex flex-row">
@@ -39,9 +53,16 @@ const StrategyList = (props) => {
       <div className="flex flex-row py-10 pl-10 px-32 gap-10 overflow-x-auto">
         {strategyData.strategies &&
           strategyData.strategies.map((strategy) => {
-            return <StrategyCard key={strategy.id} strategy={strategy} />;
+            return (
+              <StrategyCard
+                key={strategy.id}
+                strategy={strategy}
+                onUpdate={() => handleUpdate(strategy)}
+              />
+            );
           })}
       </div>
+      {modalIsActive && <UpdateModal selectedStrategy={selectedStrategy} />}
     </div>
   );
 };

@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import ButtonSubmit from "./ButtonSubmit";
 import useAxios from "../hooks/useAxios";
 import config from "../../config.js";
@@ -16,7 +16,6 @@ const FormMomentum = () => {
     qty_shares: "",
   });
   const { accessToken, userPayload } = useContext(GlobalContext);
-  const { strategyData } = useContext(StrategyCardContext);
   const [data, error, loading, fetchData] = useAxios();
 
   const handleChange = (e) => {
@@ -36,14 +35,9 @@ const FormMomentum = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (momentum.password !== momentum.confirmPassword) {
-      window.alert("Passwords do not match. Please try again.");
-      return;
-    } else {
-      createStrategy();
-      window.alert("You have successfully created a strategy.");
-      window.location.href = "/my-strategies";
-    }
+    createStrategy();
+    window.alert("You have successfully created a strategy.");
+    window.location.href = "/my-strategies";
   };
 
   return (

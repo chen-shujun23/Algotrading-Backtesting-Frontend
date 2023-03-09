@@ -3,11 +3,13 @@ import Button from "./Button";
 import useAxios from "../hooks/useAxios";
 import config from "../../config.js";
 import { GlobalContext } from "../App";
+import { useNavigate } from "react-router-dom";
 
 const UsersTable = (props) => {
   const [users, setUsers] = useState([]);
   const { accessToken } = useContext(GlobalContext);
   const [data, error, loading, fetchData] = useAxios();
+  const navigate = useNavigate();
 
   const getUsersType = () => {
     if (props.admin) {
@@ -42,6 +44,11 @@ const UsersTable = (props) => {
     deleteUser(id);
     props.onDelete(id);
     window.location.reload();
+  };
+
+  const handleUpdate = (e) => {
+    const id = e.target.value;
+    navigate(`/admin-update/${id}`);
   };
 
   return (
@@ -122,10 +129,15 @@ const UsersTable = (props) => {
                         Delete
                       </button>
                     </td>
-                    <td className="whitespace-nowrap p-4 ttext-sm pr-6">
-                      <a href="#" className="text-blue hover:underline">
+                    <td className="whitespace-nowrap p-4 text-sm pr-6">
+                      <button
+                        type="button"
+                        onClick={handleUpdate}
+                        value={person.id}
+                        className="text-blue hover:underline"
+                      >
                         Edit
-                      </a>
+                      </button>
                     </td>
                   </tr>
                 ))}

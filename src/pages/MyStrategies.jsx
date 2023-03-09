@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import PageHeader from "../components/PageHeader";
 import StrategyList from "../components/StrategyList";
 import illustration from "../assets/illustrationStrategies.png";

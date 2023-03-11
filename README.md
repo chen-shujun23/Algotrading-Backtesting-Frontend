@@ -1,4 +1,6 @@
-# Frontend Development for Handicaps Welfare Assocation
+# Frontend Development for AlgoBeez
+
+This is the frontend development for AlgoBeez, an algorithmic trading backtesting application.
 
 ![Home page](public/UserHome.png)
 ![Admin Dashboard page](public/AdminHome.png)
@@ -16,6 +18,16 @@
 
 3. Start the development server: npm run dev
 4. Open http://localhost:3000 or any other port that you have configured to view it in the browser.
+5. Create a config file with the following configuration:
+
+```javascript
+const config = {
+  APCA_BASE_URL: "https://data.alpaca.markets/v2",
+  APCA_API_KEY: "yourAlpacaAPIKey",
+  APCA_API_SECRET: "yourAlpacaAPISecret",
+  BASE_URL: "http://127.0.0.1:5001",
+};
+```
 
 ## Usage
 
@@ -40,13 +52,8 @@ This project uses the following technologies:
 
 ## Unsolved Problems & Further Work
 
-- Poorly optimized HTTP requests for events that made the application slow in loading images. We should refactor the code such that we do not have to call the database so many times. We should call the database as infrequently as possible and filter the events on the front-end instead.
-
-- Mapping fetched data led to some props not being rendered, such as the background colour of event tags and the number of search results.
-
-- Minor styling issues that make the web application differ slightly from the original UX design.
-
-- Further optimization of hierarchy.
+- Include more form types for different types of trading strategies
+- Complete Discover and Search Results page
 
 ## References
 

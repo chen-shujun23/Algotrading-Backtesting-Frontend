@@ -50,6 +50,76 @@ This project uses the following technologies:
 
 ## Frontend Approach
 
+This project uses Alpaca API for historical stock data. The Axios library is used to fetch user and strategy data from the backend server and the backend data is analyzed against the Alpaca historical data on the frontend to show the profit/loss on the user interface. A useAlpaca custom hook is created:
+
+```javascript
+const useAlpaca = () => {
+  const [apcaData, setData] = useState([]);
+  const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(false);
+
+  //Instantiate the Alpaca class and define the parameters that go along with it
+  const alpaca = new Alpaca({
+    keyId: config.APCA_API_KEY,
+    secretKey: config.APCA_API_SECRET,
+    paper: true,
+  });
+
+  const fetchBars = async (symbol, start_date, end_date) => {
+    try {
+      setLoading(true);
+      const stream = alpaca.getBarsV2(symbol, {
+        start: start_date,
+        end: end_date,
+        timeframe: "1D",
+        limit: dayjs(end_date).diff(dayjs(start_date), "day"),
+      });
+      let bars = [];
+      for await (let bar of stream) {
+        bars.push(bar);
+      }
+      setData(bars);
+    } catch (error) {
+      setError(error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return [apcaData, error, loading, fetchBars];
+};
+```
+
+A useAxios hook is also created to allow for easy fetching wherever the data is required.
+
+```javascript
+  const fetchData = async (URL, METHOD, BODY, TOKEN = null) => {
+    setLoading(true);
+    try {
+      const response = await axios({
+        method: METHOD,
+        url: URL,
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + TOKEN,
+        },
+        data: BODY,
+      });
+      setData(response.data);
+      setLoading(false);
+    } catch (error) {
+      setError(error);
+      console.log(error.response.data.message);
+      setLoading(false);
+    }
+  };
+
+  return [data, loading, error, fetchData];
+};
+```
+
+The access token in stored using the createContext hook withing the App component so that it can be retrieved for authorisation in other components, using the useContext hook.
+
 ## Unsolved Problems & Further Work
 
 - Include more form types for different types of trading strategies
@@ -58,3 +128,7 @@ This project uses the following technologies:
 ## References
 
 - All images are downloaded from [Canva](https://www.canva.com/).
+
+```
+
+```

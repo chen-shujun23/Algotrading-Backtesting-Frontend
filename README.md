@@ -34,7 +34,7 @@ This project uses the following technologies:
 
 ## Hierarchy
 
-![Hierarchy](images/Hierarchy.png)
+![Hierarchy](public/Hierarchy.png)
 
 ## Frontend Approach
 

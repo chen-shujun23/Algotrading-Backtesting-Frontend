@@ -5,13 +5,7 @@ import FormMomentum from "../components/FormMomentum";
 import illustration from "../assets/illustrationCreate.png";
 
 const Create = () => {
-  const strategies = [
-    "Arbitrage",
-    "Breakout",
-    "Momentum",
-    "Mean Reversion",
-    "Trend Following",
-  ];
+  const strategies = ["Trend", "Mean Reversion", "Momentum", "Volume"];
 
   const [form, setForm] = useState("Momentum");
 

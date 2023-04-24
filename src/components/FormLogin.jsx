@@ -42,8 +42,7 @@ const FormLogin = () => {
   }, [data]);
 
   return (
-    <form className="flex flex-col pr-10" onSubmit={handleSubmit}>
-      <h1 className="pb-5">Login</h1>
+    <form className="flex flex-col w-full" onSubmit={handleSubmit}>
       <div className="flex flex-col">
         <span className="p-4">Email Address</span>
         <input

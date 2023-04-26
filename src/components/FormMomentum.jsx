@@ -1,7 +1,6 @@
 import React, { useState, useContext, useEffect } from "react";
 import ButtonSubmit from "./ButtonSubmit";
 import useAxios from "../hooks/useAxios";
-import config from "../../config.js";
 import { GlobalContext } from "../App";
 
 const FormMomentum = () => {
@@ -26,7 +25,8 @@ const FormMomentum = () => {
   };
 
   const createStrategy = () => {
-    const url = config.BASE_URL + `/users/${userPayload.id}/strategies`;
+    const url =
+      import.meta.env.VITE_SERVER_URL + `/users/${userPayload.id}/strategies`;
     const method = "POST";
     const body = momentum;
     const token = accessToken;

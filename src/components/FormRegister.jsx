@@ -1,28 +1,28 @@
 import React, { useState, useEffect } from "react";
 import ButtonSubmit from "./ButtonSubmit";
 import useAxios from "../hooks/useAxios";
-import config from "../../config.js";
 
 const FormRegister = (props) => {
   const [data, error, loading, fetchData] = useAxios();
   const [register, setRegister] = useState({
-    firstName: "",
-    lastName: "",
+    givenName: "",
+    familyName: "",
     email: "",
     password: "",
     confirmPassword: "",
   });
 
   const createUser = () => {
-    const url = config.BASE_URL + "/users/create";
+    const url = import.meta.env.VITE_SERVER_URL + "/users/create";
     const method = "PUT";
     const isAdmin = props.admin ? true : false;
     const body = {
-      first_name: register.firstName,
-      last_name: register.lastName,
+      given_name: register.givenName,
+      family_name: register.familyName,
       email: register.email,
       password: register.password,
       is_admin: isAdmin,
+      google_acc: false,
     };
     const token = null;
     fetchData(url, method, body, token);
@@ -48,17 +48,16 @@ const FormRegister = (props) => {
   };
 
   return (
-    <form className="flex flex-col pr-10" onSubmit={handleSubmit}>
-      <h1 className="pb-5">{props.header}</h1>
+    <form className="flex flex-col w-full" onSubmit={handleSubmit}>
       <div className="flex flex-row w-full gap-4">
         <div className="flex flex-col w-1/2">
-          <span className="p-4">First Name</span>
+          <span className="p-2">Given Name</span>
           <input
             className="h-12 w-full px-4 rounded-full mt-auto"
-            id="firstName"
+            id="givenName"
             type="text"
             placeholder="Zac"
-            value={register.firstName}
+            value={register.givenName}
             onChange={handleChange}
             required
             pattern="^[a-zA-Z ]{2,30}$"
@@ -66,13 +65,13 @@ const FormRegister = (props) => {
           />
         </div>
         <div className="flex flex-col w-1/2">
-          <span className="p-4">Last Name</span>
+          <span className="p-2">Family Name</span>
           <input
             className="h-12 w-full px-4 rounded-full mt-auto"
-            id="lastName"
+            id="familyName"
             type="text"
             placeholder="Ong"
-            value={register.lastName}
+            value={register.familyName}
             onChange={handleChange}
             required
             pattern="^[a-zA-Z ]{2,30}$"
@@ -81,7 +80,7 @@ const FormRegister = (props) => {
         </div>
       </div>
       <div className="flex flex-col">
-        <span className="p-4">Email Address</span>
+        <span className="p-2">Email Address</span>
         <input
           className="h-12 w-full px-4 rounded-full mt-auto"
           id="email"
@@ -93,7 +92,7 @@ const FormRegister = (props) => {
         />
       </div>
       <div className="flex flex-col">
-        <span className="p-4">Password</span>
+        <span className="p-2">Password</span>
         <input
           className="h-12 w-full px-4 rounded-full mt-auto"
           id="password"
@@ -107,7 +106,7 @@ const FormRegister = (props) => {
         />
       </div>
       <div className="flex flex-col">
-        <span className="p-4">Confirm Password</span>
+        <span className="p-2">Confirm Password</span>
         <input
           className="h-12 w-full px-4 rounded-full mt-auto"
           id="confirmPassword"

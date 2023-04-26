@@ -1,7 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import StrategyCard from "./StrategyCard";
 import useAxios from "../hooks/useAxios";
-import config from "../../config.js";
 import { GlobalContext } from "../App";
 import UpdateModal from "./UpdateModal";
 
@@ -18,7 +17,8 @@ const StrategyList = (props) => {
   const [selectedStrategy, setSelectedStrategy] = useState(null);
 
   const getStrategiesByUser = () => {
-    const url = config.BASE_URL + `/users/${userPayload.id}/strategies`;
+    const url =
+      import.meta.env.VITE_SERVER_URL + `/users/${userPayload.id}/strategies`;
     const method = "GET";
     const body = null;
     const token = accessToken;

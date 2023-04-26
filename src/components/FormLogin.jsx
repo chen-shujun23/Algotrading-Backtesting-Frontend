@@ -2,7 +2,6 @@ import React, { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import ButtonSubmit from "./ButtonSubmit";
 import useAxios from "../hooks/useAxios";
-import config from "../../config.js";
 import { GlobalContext } from "../App";
 
 const FormLogin = () => {
@@ -26,7 +25,7 @@ const FormLogin = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (login.email && login.password) {
-      const url = config.BASE_URL + "/users/user-login";
+      const url = import.meta.env.VITE_SERVER_URL + "/users/user-login";
       const method = "POST";
       const body = JSON.stringify(login);
       fetchData(url, method, body);

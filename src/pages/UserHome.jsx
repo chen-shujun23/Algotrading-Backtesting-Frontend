@@ -45,7 +45,7 @@ const UserHome = () => {
         <div className="w-1/2 flex flex-col justify-center pr-10">
           <h1>
             {userPayload ? "Welcome back," : "Algo Trading"}
-            <br /> {userPayload ? userPayload.first_name : "made easy"}
+            <br /> {userPayload ? userPayload.given_name : "made easy"}
           </h1>
           <span className="pt-5">
             Are you interested in investing in the stock market but want to test

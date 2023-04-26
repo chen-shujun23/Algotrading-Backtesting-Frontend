@@ -1,7 +1,6 @@
 import React, { useState, useContext } from "react";
 import ButtonSubmit from "./ButtonSubmit";
 import useAxios from "../hooks/useAxios";
-import config from "../../config.js";
 import { GlobalContext } from "../App";
 
 const FormUpdateUser = (props) => {
@@ -14,7 +13,7 @@ const FormUpdateUser = (props) => {
   });
 
   const updateUser = () => {
-    const url = config.BASE_URL + `/users/update/${props.id}`;
+    const url = import.meta.env.VITE_SERVER_URL + `/users/update/${props.id}`;
     const method = "PUT";
     const body = {
       first_name: update.firstName,

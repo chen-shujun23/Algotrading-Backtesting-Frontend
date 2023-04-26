@@ -1,5 +1,4 @@
 import { useState } from "react";
-import config from "../../config.js";
 import Alpaca from "@alpacahq/alpaca-trade-api";
 import dayjs from "dayjs";
 
@@ -10,8 +9,8 @@ const useAlpaca = () => {
 
   //Instantiate the Alpaca class and define the parameters that go along with it
   const alpaca = new Alpaca({
-    keyId: config.APCA_API_KEY,
-    secretKey: config.APCA_API_SECRET,
+    keyId: import.meta.env.VITE_APCA_API_KEY,
+    secretKey: import.meta.env.VITE_APCA_API_SECRET,
     paper: true,
   });
 

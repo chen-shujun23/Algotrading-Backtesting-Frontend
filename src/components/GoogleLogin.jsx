@@ -1,15 +1,32 @@
-import React from "react";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
+import { useNavigate } from "react-router-dom";
 import jwt from "jsonwebtoken";
+import useAxios from "../hooks/useAxios";
+import { GlobalContext } from "../App";
 
-const GoogleLogin = () => {
-  const [user, setUser] = useState({});
+const GoogleLogin = (props) => {
+  const [user, setUser] = useState({
+    givenName: "",
+    familyName: "",
+    email: "",
+    password: "",
+  });
+  const [data, error, loading, fetchData] = useAxios();
+  const { setAccessToken } = useContext(GlobalContext);
+  const navigate = useNavigate();
+
+  const saveToLocalStorage = (token) => {
+    localStorage.setItem("refreshToken", token);
+  };
 
   const handleCallbackResponse = (res) => {
-    console.log("Encoded JWT ID token" + res.credential);
     let userObject = jwt.decode(res.credential);
-    console.log(userObject);
-    setUser(userObject);
+    setUser({
+      givenName: userObject.given_name,
+      familyName: userObject.family_name,
+      email: userObject.email,
+      password: "google123$",
+    });
   };
 
   useEffect(() => {
@@ -23,8 +40,42 @@ const GoogleLogin = () => {
       size: "large",
       shape: "pill",
       width: 384,
+      text: props.text,
     });
   }, []);
+
+  const handleSubmit = () => {
+    const url = import.meta.env.VITE_SERVER_URL + "/users/create";
+    const method = "PUT";
+    const body = {
+      given_name: user.givenName,
+      family_name: user.familyName,
+      email: user.email,
+      password: user.password,
+      is_admin: false,
+      google_acc: true,
+    };
+    const token = null;
+    fetchData(url, method, body, token);
+    if (user.email && user.password) {
+      const url = import.meta.env.VITE_SERVER_URL + "/users/user-login";
+      const method = "POST";
+      const body = JSON.stringify(user);
+      fetchData(url, method, body);
+    }
+  };
+
+  useEffect(() => {
+    handleSubmit(user);
+  }, [user]);
+
+  useEffect(() => {
+    if (data) {
+      setAccessToken(data.access);
+      saveToLocalStorage(data.refresh);
+      navigate("/home");
+    }
+  }, [data]);
 
   return (
     <div className="flex py-4">

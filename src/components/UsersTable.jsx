@@ -1,7 +1,6 @@
 import React, { useEffect, useState, useContext } from "react";
 import Button from "./Button";
 import useAxios from "../hooks/useAxios";
-import config from "../../config.js";
 import { GlobalContext } from "../App";
 import { useNavigate } from "react-router-dom";
 
@@ -30,7 +29,7 @@ const UsersTable = (props) => {
   }, [props.allUsers]);
 
   const deleteUser = (userId) => {
-    const url = config.BASE_URL + "/users/delete";
+    const url = import.meta.env.VITE_SERVER_URL + "/users/delete";
     const method = "DELETE";
     const body = { id: userId };
     const token = accessToken;

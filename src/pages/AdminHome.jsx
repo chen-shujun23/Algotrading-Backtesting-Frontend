@@ -3,7 +3,6 @@ import PageHeader from "../components/PageHeader";
 import UsersTable from "../components/UsersTable";
 import illustration from "../assets/illustrationAdminDashboard.png";
 import useAxios from "../hooks/useAxios";
-import config from "../../config.js";
 import { GlobalContext } from "../App";
 
 const AdminHome = () => {
@@ -12,7 +11,7 @@ const AdminHome = () => {
   const [allUsers, setAllUSers] = useState([]);
 
   const getAllUsers = () => {
-    const url = config.BASE_URL + "/users/all-users";
+    const url = import.meta.env.VITE_SERVER_URL + "/users/all-users";
     const method = "GET";
     const body = null;
     const token = accessToken;

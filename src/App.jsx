@@ -3,7 +3,6 @@ import { Route, Routes, Navigate } from "react-router-dom";
 import jwt from "jsonwebtoken";
 import "./App.css";
 import "./index.css";
-import config from "../config.js";
 
 import NavBar from "./components/NavBar";
 import AdminRegister from "./pages/AdminRegister";
@@ -35,7 +34,7 @@ function App() {
 
   useEffect(() => {
     if (refreshToken) {
-      const url = config.BASE_URL + "/users/refresh";
+      const url = import.meta.env.VITE_SERVER_URL + "/users/refresh";
       const method = "POST";
       const body = JSON.stringify({ refresh: refreshToken });
       fetchData(url, method, body);

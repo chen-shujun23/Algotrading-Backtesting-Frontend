@@ -3,32 +3,33 @@ import ButtonSubmit from "./ButtonSubmit";
 import useAxios from "../hooks/useAxios";
 import { GlobalContext } from "../App";
 
-const FormMomentum = () => {
-  const [momentum, setMomentum] = useState({
+const FormTrend = () => {
+  const [variables, setVariables] = useState({
     symbol: "",
     title: "",
     capital: "",
     start_date: "",
     end_date: "",
+    qty_shares: "",
     sSMA: "",
     lSMA: "",
-    qty_shares: "",
   });
   const { accessToken, userPayload } = useContext(GlobalContext);
   const [data, error, loading, fetchData] = useAxios();
 
   const handleChange = (e) => {
-    setMomentum({
-      ...momentum,
+    setVariables({
+      ...variables,
       [e.target.id]: e.target.value,
     });
   };
 
   const createStrategy = () => {
     const url =
-      import.meta.env.VITE_SERVER_URL + `/users/${userPayload.id}/strategies`;
+      import.meta.env.VITE_SERVER_URL +
+      `/strategiesSMA/${userPayload.id}/create-strategies`;
     const method = "POST";
-    const body = momentum;
+    const body = variables;
     const token = accessToken;
     fetchData(url, method, body, token);
   };
@@ -50,7 +51,7 @@ const FormMomentum = () => {
           id="title"
           type="text"
           placeholder="AAPL Moving Average Crossover"
-          value={momentum.title}
+          value={variables.title}
           onChange={handleChange}
           required
         />
@@ -63,7 +64,7 @@ const FormMomentum = () => {
             id="symbol"
             type="text"
             placeholder="AAPL"
-            value={momentum.symbol}
+            value={variables.symbol}
             onChange={handleChange}
             required
             pattern="^[A-Z]{1,5}$"
@@ -79,7 +80,7 @@ const FormMomentum = () => {
               id="capital"
               type="number"
               placeholder="10000"
-              value={momentum.capital}
+              value={variables.capital}
               onChange={handleChange}
               required
             />
@@ -93,7 +94,7 @@ const FormMomentum = () => {
             className="h-12 w-full px-4 rounded-full mt-auto"
             id="start_date"
             type="date"
-            value={momentum.start_date}
+            value={variables.start_date}
             onChange={handleChange}
             required
           />
@@ -104,12 +105,29 @@ const FormMomentum = () => {
             className="h-12 w-full px-4 rounded-full mt-auto"
             id="end_date"
             type="date"
-            value={momentum.end_date}
+            value={variables.end_date}
             onChange={handleChange}
             required
           />
         </div>
       </div>
+
+      <h3 className="pt-4">Quantity of Shares to Buy/ Sell</h3>
+      <div className="flex flex-row w-full gap-10">
+        <div className="flex flex-col w-1/2">
+          <span className="p-4">Quantity of Shares</span>
+          <input
+            className="h-12 w-full px-4 rounded-full mt-auto"
+            id="qty_shares"
+            type="number"
+            placeholder="5"
+            value={variables.qty_shares}
+            onChange={handleChange}
+            required
+          />
+        </div>
+      </div>
+
       <h3 className="py-4">Buy / Sell Conditions</h3>
       <div className="bg-yellow-light p-4 rounded-3xl">
         <div className="flex flex-row w-full gap-5">
@@ -121,7 +139,7 @@ const FormMomentum = () => {
               id="sSMA"
               type="number"
               placeholder="50"
-              value={momentum.sSMA}
+              value={variables.sSMA}
               onChange={handleChange}
               required
             />
@@ -138,7 +156,7 @@ const FormMomentum = () => {
               id="lSMA"
               type="number"
               placeholder="200"
-              value={momentum.lSMA}
+              value={variables.lSMA}
               onChange={handleChange}
               required
             />
@@ -151,22 +169,6 @@ const FormMomentum = () => {
         </div>
       </div>
 
-      <h3 className="pt-4">Quantity of Shares to Buy/ Sell</h3>
-      <div className="flex flex-row w-full gap-10">
-        <div className="flex flex-col w-1/2">
-          <span className="p-4">Quantity of Shares</span>
-          <input
-            className="h-12 w-full px-4 rounded-full mt-auto"
-            id="qty_shares"
-            type="number"
-            placeholder="5"
-            value={momentum.qty_shares}
-            onChange={handleChange}
-            required
-          />
-        </div>
-      </div>
-
       <div className="pt-8 pb-4">
         <ButtonSubmit bgColour="bg-red" innerText="Submit" />
       </div>
@@ -174,4 +176,4 @@ const FormMomentum = () => {
   );
 };
 
-export default FormMomentum;
+export default FormTrend;

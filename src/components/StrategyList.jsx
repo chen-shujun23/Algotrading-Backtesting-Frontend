@@ -18,7 +18,8 @@ const StrategyList = (props) => {
 
   const getStrategiesByUser = () => {
     const url =
-      import.meta.env.VITE_SERVER_URL + `/users/${userPayload.id}/strategies`;
+      import.meta.env.VITE_SERVER_URL +
+      `/strategiesSMA/${userPayload.id}/get-strategies`;
     const method = "GET";
     const body = null;
     const token = accessToken;
@@ -34,6 +35,8 @@ const StrategyList = (props) => {
       setStrategyData(data);
     }
   }, [data]);
+
+  console.log(strategyData);
 
   // set selected strategy when card update is clicked
   const handleUpdate = (strategy) => {
@@ -51,8 +54,8 @@ const StrategyList = (props) => {
         </div>
       ) : null}
       <div className="flex flex-row py-10 pl-10 px-32 gap-10 overflow-x-auto">
-        {strategyData.strategies &&
-          strategyData.strategies.map((strategy) => {
+        {strategyData &&
+          strategyData.map((strategy) => {
             return (
               <StrategyCard
                 key={strategy.id}

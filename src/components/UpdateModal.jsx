@@ -1,5 +1,5 @@
 import React, { useContext, useState, useEffect } from "react";
-import FormMomentum from "./FormMomentum";
+import FormMomentum from "./FormSMA";
 import ReactDOM from "react-dom";
 import { RxCross1 } from "react-icons/rx";
 import { GlobalContext } from "../App";

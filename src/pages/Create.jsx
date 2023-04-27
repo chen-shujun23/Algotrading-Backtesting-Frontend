@@ -1,13 +1,21 @@
 import React, { useEffect, useState } from "react";
 import PageHeader from "../components/PageHeader";
 import ButtonStrategy from "../components/ButtonStrategy";
-import FormMomentum from "../components/FormMomentum";
+import FormSMA from "../components/FormSMA";
 import illustration from "../assets/illustrationCreate.png";
 
 const Create = () => {
-  const strategies = ["Trend", "Mean Reversion", "Momentum", "Volume"];
+  const strategies = [
+    "Simple Moving Averages",
+    "Exponential Moving Averages",
+    "Bollinger Band",
+    "Stochastic Oscillator",
+    "Relative Strength Index",
+    "MACD Indicator",
+    "On-balance Volume",
+  ];
 
-  const [form, setForm] = useState("Momentum");
+  const [form, setForm] = useState("Simple Moving Averages");
 
   const handleClick = (e) => {
     const buttonText = e.target.textContent;
@@ -24,7 +32,7 @@ const Create = () => {
       />
       <div className="w-screen bg-yellow-light p-20 flex flex-row gap-20">
         <div className="w-1/4 text-center">
-          <h2 className="mb-4">Strategy Forms</h2>
+          <h2 className="mb-4">Technical Indicators</h2>
           <div className="bg-yellow-dark rounded-3xl grid grid-rows-auto ">
             {strategies.map((item, index) => (
               <ButtonStrategy
@@ -38,7 +46,7 @@ const Create = () => {
         <div className="flex flex-col w-3/4 items-center">
           <h2 className="mb-4 text-center ">{form}</h2>
           <div className="bg-yellow-dark w-full rounded-3xl grid grid-rows-auto px-8">
-            {form == "Momentum" ? <FormMomentum /> : null}
+            {form == "Simple Moving Averages" ? <FormSMA /> : null}
           </div>
         </div>
       </div>

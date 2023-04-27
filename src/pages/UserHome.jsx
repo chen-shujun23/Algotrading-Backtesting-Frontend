@@ -44,7 +44,7 @@ const UserHome = () => {
       <div className="w-screen h-screen bg-yellow-dark flex flex-row p-20">
         <div className="w-1/2 flex flex-col justify-center pr-10">
           <h1>
-            {userPayload ? "Welcome back," : "Algo Trading"}
+            {userPayload ? "Hello & welcome," : "Algo Trading"}
             <br /> {userPayload ? userPayload.given_name : "made easy"}
           </h1>
           <span className="pt-5">

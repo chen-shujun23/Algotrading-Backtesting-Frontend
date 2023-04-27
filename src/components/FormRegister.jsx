@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext, useRef } from "react";
 import ButtonSubmit from "./ButtonSubmit";
+import { useNavigate } from "react-router-dom";
 import useAxios from "../hooks/useAxios";
+import { GlobalContext } from "../App";
 
 const FormRegister = (props) => {
-  const [data, error, loading, fetchData] = useAxios();
   const [register, setRegister] = useState({
     givenName: "",
     familyName: "",
@@ -11,21 +12,13 @@ const FormRegister = (props) => {
     password: "",
     confirmPassword: "",
   });
+  const [user, setUser] = useState({});
+  const [data, error, loading, fetchData] = useAxios();
+  const { setAccessToken } = useContext(GlobalContext);
+  const navigate = useNavigate();
 
-  const createUser = () => {
-    const url = import.meta.env.VITE_SERVER_URL + "/users/create";
-    const method = "PUT";
-    const isAdmin = props.admin ? true : false;
-    const body = {
-      given_name: register.givenName,
-      family_name: register.familyName,
-      email: register.email,
-      password: register.password,
-      is_admin: isAdmin,
-      google_acc: false,
-    };
-    const token = null;
-    fetchData(url, method, body, token);
+  const saveToLocalStorage = (token) => {
+    localStorage.setItem("refreshToken", token);
   };
 
   const handleChange = (e) => {
@@ -33,6 +26,36 @@ const FormRegister = (props) => {
       ...register,
       [e.target.id]: e.target.value,
     });
+  };
+
+  const handleRegister = () => {
+    setUser(register);
+  };
+
+  useEffect(() => {
+    handleRegister();
+  }, [register]);
+
+  const createUser = async () => {
+    const url = import.meta.env.VITE_SERVER_URL + "/users/create";
+    const method = "PUT";
+    const isAdmin = props.admin ? true : false;
+    const body = {
+      given_name: user.givenName,
+      family_name: user.familyName,
+      email: user.email,
+      password: user.password,
+      is_admin: isAdmin,
+      google_acc: false,
+    };
+    const token = null;
+    await fetchData(url, method, body, token);
+    if (user.email && user.password) {
+      const urlLogin = import.meta.env.VITE_SERVER_URL + "/users/user-login";
+      const methodLogin = "POST";
+      const bodyLogin = JSON.stringify(user);
+      await fetchData(urlLogin, methodLogin, bodyLogin);
+    }
   };
 
   const handleSubmit = (e) => {
@@ -43,9 +66,16 @@ const FormRegister = (props) => {
     } else {
       createUser();
       window.alert("You have successfully registered.");
-      window.location.href = "/home";
     }
   };
+
+  useEffect(() => {
+    if (data && data.access && data.refresh) {
+      setAccessToken(data.access);
+      saveToLocalStorage(data.refresh);
+      navigate("/home");
+    }
+  }, [data]);
 
   return (
     <form className="flex flex-col w-full" onSubmit={handleSubmit}>

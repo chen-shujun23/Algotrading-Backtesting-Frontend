@@ -44,7 +44,7 @@ const GoogleLogin = (props) => {
     });
   }, []);
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     const url = import.meta.env.VITE_SERVER_URL + "/users/create";
     const method = "PUT";
     const body = {
@@ -56,21 +56,21 @@ const GoogleLogin = (props) => {
       google_acc: true,
     };
     const token = null;
-    fetchData(url, method, body, token);
+    await fetchData(url, method, body, token);
     if (user.email && user.password) {
-      const url = import.meta.env.VITE_SERVER_URL + "/users/user-login";
-      const method = "POST";
-      const body = JSON.stringify(user);
-      fetchData(url, method, body);
+      const urlLogin = import.meta.env.VITE_SERVER_URL + "/users/user-login";
+      const methodLogin = "POST";
+      const bodyLogin = JSON.stringify(user);
+      await fetchData(urlLogin, methodLogin, bodyLogin);
     }
   };
 
   useEffect(() => {
-    handleSubmit(user);
+    handleSubmit();
   }, [user]);
 
   useEffect(() => {
-    if (data) {
+    if (data && data.access && data.refresh) {
       setAccessToken(data.access);
       saveToLocalStorage(data.refresh);
       navigate("/home");

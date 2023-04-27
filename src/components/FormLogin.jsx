@@ -41,7 +41,7 @@ const FormLogin = () => {
   }, [data]);
 
   return (
-    <form className="flex flex-col w-full" onSubmit={handleSubmit}>
+    <form className="flex flex-col w-full h-fit" onSubmit={handleSubmit}>
       <div className="flex flex-col">
         <span className="p-4">Email Address</span>
         <input

@@ -129,6 +129,3 @@ The access token in stored using the createContext hook withing the App componen
 
 - All images are downloaded from [Canva](https://www.canva.com/).
 
-```
-
-```
